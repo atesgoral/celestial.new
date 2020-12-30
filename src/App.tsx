@@ -35,7 +35,11 @@ interface MidiEventsProps {
 
 function MidiEvents({input}: MidiEventsProps) {
   return (
-    <pre>Hello</pre>
+    <pre>{
+      input.events
+        .map(({channel, note, velocity}) => `${channel}: ${note}@${velocity}`)
+        .join('\n')
+    }</pre>
   );
 }
 
