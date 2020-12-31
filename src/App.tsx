@@ -29,17 +29,36 @@ function MidiInputSelector({inputs, defaultSelectedId, onChange}: MidiInputProps
   );
 }
 
+interface MidiChannelEventsProps {
+  input: Input;
+  channel: number;
+}
+
+function MidiChannelEvents({input, channel}: MidiChannelEventsProps) {
+  return (
+    <pre>{
+      input.events
+        .filter((event) => event.channel === channel)
+        .map(({channel, note, velocity}) => `${channel}: ${note}@${velocity}`)
+        .join('')
+    }</pre>
+  );
+}
+
 interface MidiEventsProps {
   input: Input;
 }
 
 function MidiEvents({input}: MidiEventsProps) {
+  const channels: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+
   return (
-    <pre>{
-      input.events
-        .map(({channel, note, velocity}) => `${channel}: ${note}@${velocity}`)
-        .join('\n')
-    }</pre>
+    <>
+      {
+        channels
+          .map((channel: number) => <MidiChannelEvents key={channel} input={input} channel={channel} />)
+      }
+    </>
   );
 }
 

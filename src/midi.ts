@@ -38,6 +38,7 @@ export class Midi {
           const velocity = data2;
 
           input!.events.push({channel, note, velocity});
+          // input!.events = input!.events.concat({channel, note, velocity});
           input!.lastEventTimeStamp = timeStamp;
         };
       }
